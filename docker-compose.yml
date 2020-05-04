@@ -1,0 +1,23 @@
+version: "3"
+services:
+  pr_police:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: ./entrypoint.sh
+    environment:
+      TSC_NONPOLLING_WATCHER: 1
+      SLACK_TOKEN: ${SLACK_TOKEN}
+      GH_TOKEN: ${GH_TOKEN}
+      GH_REPOS: ${GH_REPOS}
+      SLACK_GROUPS: ${SLACK_GROUPS}
+      SLACK_CHANNELS: ${SLACK_CHANNELS}
+      SLACK_BOT_NAME: PRPolice
+      TZ: Europe/Moscow
+      DEBUG: "true"
+      TIMES_TO_RUN: "1625,0800,1250,1645"
+    volumes:
+      - .:/app
+      - /app/node_modules/
+    ports:
+      - "9000:9000"
